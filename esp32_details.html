@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Full Guide for Juniors</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --danger: #dc2626;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, sans-serif; 
+            line-height: 1.8; 
+            background-color: #e2e8f0; 
+            color: var(--dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { 
+            max-width: 1000px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+
+        .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .back-btn { text-decoration: none; color: var(--primary); font-weight: bold; font-size: 1.1rem; }
+
+        h1 { color: var(--primary); text-align: center; margin-bottom: 10px; }
+        h2 { background: var(--dark); color: white; padding: 10px 20px; border-radius: 8px; margin-top: 40px; font-size: 1.4rem; }
+        h3 { color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-top: 25px; }
+
+        .intro-card { background: #eff6ff; padding: 20px; border-radius: 12px; border-left: 6px solid var(--primary); margin-bottom: 30px; }
+
+        .warning-box {
+            background: #fff1f2;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #fecdd3;
+            color: #9f1239;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Full Diagram Styling */
+        .diagram-container {
+            width: 100%;
+            text-align: center;
+            margin: 30px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+        .full-diagram {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; }
+        th { background: #334155; color: white; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        /* Code Section Styling */
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #334155;
+            padding: 10px 20px;
+            border-radius: 12px 12px 0 0;
+            margin-top: 20px;
+        }
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .copy-btn:hover { background: #059669; }
+        .code-section { 
+            background: #1e293b; 
+            color: #e2e8f0; 
+            padding: 25px; 
+            border-radius: 0 0 12px 12px;
+            overflow-x: auto; 
+            margin-bottom: 30px;
+        }
+        pre { margin: 0; font-family: 'Consolas', monospace; }
+
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; color: white; font-size: 0.8rem; font-weight: bold; }
+        .bg-blue { background: var(--primary); }
+        .bg-orange { background: var(--warning); }
+        .bg-red { background: var(--danger); }
+
+        /* Contact Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 15px; width: 300px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .contact-link { display: block; margin: 15px 0; padding: 12px; text-decoration: none; color: var(--dark); font-weight: bold; border: 1px solid #eee; border-radius: 8px; transition: 0.3s; }
+        .contact-link:hover { background: var(--primary); color: white; }
+        .close-btn { position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 24px; color: #aaa; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-header">
+        <a href="index.html" class="back-btn">← Back to Device Hub</a>
+        <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">Developed by: Hein</span>
+    </div>
+
+    <h1>ESP32 DevKit V1 (30-Pin) Full Guide</h1>
+    
+    <div class="intro-card">
+        ESP32 ဆိုတာ low-cost, low-power <strong>"System on a Chip" (SoC)</strong> တစ်ခုဖြစ်ပြီး Wi-Fi နဲ့ Dual-mode Bluetooth ဆက်သွယ်မှုတွေ ပါဝင်တဲ့အတွက် IoT ပရောဂျက်တွေမှာ အသုံးအများဆုံး microcontroller ဖြစ်ပါတယ်။
+    </div>
+
+    <div class="diagram-container">
+        <h3>ESP32 Pinout Diagram</h3>
+        <img src="esp32.webp" alt="ESP32 Pinout" class="full-diagram">
+    </div>
+
+    <h2>၁။ Pin Layout အသေးစိတ်</h2>
+    <div class="grid">
+        <div class="info-card">
+            <h3>ပါဝါငုတ်များ (Power Pins)</h3>
+            <ul>
+                <li><strong>VIN:</strong> 5V External Power ပေးရန်။</li>
+                <li><strong>3V3:</strong> 3.3V Output (Sensor များအတွက်)။</li>
+                <li><strong>GND:</strong> Ground (အနှုတ်ငုတ်)။</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>ဆက်သွယ်ရေး (Communication)</h3>
+            <ul>
+                <li><strong>I2C:</strong> SDA (GPIO 21), SCL (GPIO 22)</li>
+                <li><strong>SPI:</strong> MOSI(23), MISO(19), SCK(18), CS(5)</li>
+                <li><strong>UART:</strong> TX0/RX0 နှင့် TX2/RX2 (GPIO 17/16)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        ⚠️ သတိပြုရန်: ESP32 GPIO များသည် 3.3V Logic သာဖြစ်ပြီး 5V ပေးမိပါက Chip လောင်သွားနိုင်ပါသည်။
+    </div>
+
+    <h2>၂။ အထူးသတိထားရမည့် Pins များ</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Pin Name</th>
+                <th>Category</th>
+                <th>အချက်အလက်</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GPIO 0</td>
+                <td><span class="badge bg-blue">Boot</span></td>
+                <td>Ground နှင့်ထိထားလျှင် Programming Mode ထဲရောက်မည်။</td>
+            </tr>
+            <tr>
+                <td>GPIO 34, 35, 36, 39</td>
+                <td><span class="badge bg-red">Input Only</span></td>
+                <td>Output အဖြစ်သုံး၍ မရပါ။</td>
+            </tr>
+            <tr>
+                <td>GPIO 6 to 11</td>
+                <td><span class="badge bg-red">Flash Memory</span></td>
+                <td>Internal Flash နှင့် ချိတ်ထားသဖြင့် လုံးဝမသုံးသင့်ပါ။</td>
+            </tr>
+            <tr>
+                <td>GPIO 1 & 3</td>
+                <td><span class="badge bg-orange">Serial</span></td>
+                <td>Hardware Serial အတွက်ဖြစ်၍ I/O အဖြစ်သုံးရန်မသင့်ပါ။</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>၃။ လက်တွေ့စမ်းသပ်ရန် Code Example</h2>
+    <p>ပထမဆုံး စမ်းသပ်ရန် <strong>Serial Monitoring</strong> နှင့် <strong>LED Blink</strong> ကုဒ်ဖြစ်ပါသည်။</p>
+    
+    <div class="code-header">
+        <span style="color: #cbd5e1; font-size: 0.9rem;">Arduino IDE (.ino)</span>
+        <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+    </div>
+    <div class="code-section">
+        <pre id="arduinoCode">
+#define LED_PIN 2
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  Serial.println("LED is ON");
+  digitalWrite(LED_PIN, HIGH);
+  delay(1000);
+
+  Serial.println("LED is OFF");
+  digitalWrite(LED_PIN, LOW);
+  delay(1000);
+}</pre>
+    </div>
+
+    <div class="grid">
+        <div style="background: #f1f5f9; padding: 15px; border-radius: 10px;">
+            <strong>💡 Pro Tip:</strong><br>
+            Upload Error တက်လျှင် <strong>BOOT button</strong> ကို ဖိထားပေးပါ။
+        </div>
+        <div style="background: #f1f5f9; padding: 15px; border-radius: 10px;">
+            <strong>🔌 Driver:</strong><br>
+            Port မပေါ်ပါက <strong>CP2102 Driver</strong> ကို Install လုပ်ပါ။
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; color: #94a3b8; font-size: 0.9rem;">
+        &copy; 2024 IoT Education | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong>
+    </footer>
+</div>
+
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3 style="color: var(--primary); margin-top: 10px;">Contact Me</h3>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</p>
+        <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
+        <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email: heinzarni04@gmail.com</a>
+    </div>
+</div>
+
+<script>
+// Copy Code Function
+function copyCode() {
+    const code = document.getElementById("arduinoCode").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        btn.innerText = "Copied!";
+        btn.style.background = "#2563eb";
+        
+        setTimeout(() => {
+            btn.innerText = "Copy Code";
+            btn.style.background = "#10b981";
+        }, 2000);
+    });
+}
+
+// Modal Functions
+function openModal() {
+    document.getElementById("contactModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("contactModal").style.display = "none";
+}
+
+// Modal အပြင်ဘက်ကို နှိပ်ရင် ပိတ်ပေးရန်
+window.onclick = function(event) {
+    const modal = document.getElementById("contactModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>

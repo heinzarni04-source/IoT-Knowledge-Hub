@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Device Knowledge Hub</title>
+    <style>
+        :root { --primary: #2563eb; --dark: #1e293b; --light: #f8fafc; }
+        
+        body { 
+            font-family: 'Segoe UI', sans-serif; background-color: #f1f5f9; 
+            margin: 0; padding: 15px; display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        .top-nav { text-align: right; padding-bottom: 10px; font-size: 0.9rem; }
+        .dev-link { color: var(--primary); font-weight: bold; text-decoration: none; cursor: pointer; border-bottom: 1px dashed var(--primary); }
+
+        h1 { text-align: center; color: var(--dark); font-size: 1.5rem; margin: 20px 0; }
+
+        .container { 
+            display: grid; grid-template-columns: 1fr; gap: 20px; 
+            max-width: 1200px; margin: 0 auto; flex: 1; width: 100%; box-sizing: border-box; 
+        }
+
+        /* Desktop view */
+        @media (min-width: 768px) {
+            .container { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+            h1 { font-size: 2.2rem; }
+        }
+
+        .device-card { 
+            background: white; border-radius: 15px; overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; 
+        }
+
+        .device-photo { 
+            width: 100%; height: 200px; object-fit: contain; padding: 15px; 
+            background: #fff; border-bottom: 1px solid #eee; box-sizing: border-box; 
+        }
+
+        .content { padding: 20px; flex-grow: 1; }
+        .tag { font-size: 10px; background: #dbeafe; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-weight: bold; text-transform: uppercase; }
+        h3 { margin: 15px 0 10px 0; font-size: 1.25rem; color: var(--dark); }
+        .details { margin-bottom: 25px; font-size: 14px; color: #64748b; line-height: 1.5; }
+        
+        .btn-group { display: flex; gap: 10px; }
+        .btn { flex: 1; text-align: center; padding: 12px; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: bold; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-dark { background: var(--dark); color: white; }
+
+        footer { text-align: center; padding: 30px; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 20px; }
+
+        /* Modal Design */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .modal-content { background: white; margin: 20% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 320px; text-align: center; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .contact-link { display: block; margin: 15px 0; padding: 14px; text-decoration: none; color: var(--dark); font-weight: bold; border: 1px solid #eee; border-radius: 10px; transition: 0.3s; }
+        .contact-link:hover { background: var(--primary); color: white; }
+        .close-btn { position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 24px; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="top-nav">Developed by: <a class="dev-link" onclick="openModal()">Hein</a></div>
+    <h1>IoT Device Knowledge Hub</h1>
+    
+    <div class="container">
+        <div class="device-card">
+            <img src="esp32.webp" alt="ESP32" class="device-photo">
+            <div class="content">
+                <span class="tag">ESP32 • WiFi & Bluetooth</span>
+                <h3>ESP32 Development & Pinout Guide</h3>
+                <p class="details">Learn the fundamentals of the ESP32 SoC, including GPIO mapping and programming.</p>
+                <div class="btn-group">
+                    <a href="https://app.cirkitdesigner.com/project" class="btn btn-primary">For Create Project</a>
+                    <a href="esp32_details.html" class="btn btn-dark">Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="device-card">
+            <img src="raspberry.webp" alt="Raspberry Pi" class="device-photo">
+            <div class="content">
+                <span class="tag">Raspberry Pi • Linux IoT</span>
+                <h3>Raspberry Pi System Architecture</h3>
+                <p class="details">Explore Linux-based single-board computing and Python automation.</p>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-primary">Coming Soon</a>
+                    <a href="#" class="btn btn-dark">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 IoT Hub | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></footer>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 style="color: var(--primary);">Contact Me</h3>
+            <p style="font-size: 0.85rem; color: #666;">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</p>
+            <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
+            <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email : heinzarni04@gmail.com</a>
+        </div>
+    </div>
+
+    <script>
+        function openModal() { document.getElementById("contactModal").style.display = "block"; }
+        function closeModal() { document.getElementById("contactModal").style.display = "none"; }
+        window.onclick = function(e) { if (e.target == document.getElementById("contactModal")) closeModal(); }
+    </script>
+</body>
+</html>
