@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ESP32 Full Guide - Learn GPIO mapping, WiFi connectivity, Bluetooth communication, and practical programming examples.">
-    <meta name="keywords" content="ESP32, WiFi, Bluetooth, GPIO, Microcontroller, IoT, Tutorial">
+    <meta name="description" content="Raspberry Pi Full Guide - Learn system architecture, GPIO control, Python programming, and build advanced IoT applications.">
+    <meta name="keywords" content="Raspberry Pi, Linux, GPIO, Python, IoT, Single Board Computer, Tutorial">
     <meta name="author" content="Hein">
-    <title>ESP32 Full Guide - GPIO Pinout & Programming</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%232563eb'>E</text></svg>">
+    <title>Raspberry Pi Full Guide - System Architecture & Python Programming</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23C51A4A'>🍓</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --primary: #2563eb;
+            --primary: #C51A4A;
             --secondary: #10b981;
             --danger: #dc2626;
             --warning: #f59e0b;
@@ -23,7 +23,7 @@
         }
 
         html.dark-mode {
-            --primary: #3b82f6;
+            --primary: #ec4899;
             --dark: #0f172a;
             --light: #1e293b;
             --text: #e2e8f0;
@@ -135,7 +135,7 @@
         }
 
         .intro-card { 
-            background: rgba(37, 99, 235, 0.1); 
+            background: rgba(197, 26, 74, 0.1); 
             padding: 20px; 
             border-radius: 12px; 
             border-left: 6px solid var(--primary); 
@@ -158,25 +158,19 @@
             color: #fca5a5;
         }
 
-        /* Full Diagram Styling */
-        .diagram-container {
-            width: 100%;
-            text-align: center;
-            margin: 30px 0;
-            background: white;
+        .info-box {
+            background: #eff6ff;
             padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            border-radius: 10px;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            margin: 20px 0;
         }
 
-        html.dark-mode .diagram-container {
-            background: #0f172a;
-        }
-
-        .full-diagram {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        html.dark-mode .info-box {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: rgba(37, 99, 235, 0.5);
+            color: #93c5fd;
         }
 
         .grid { 
@@ -214,7 +208,6 @@
             background: var(--light);
         }
 
-        /* Code Section Styling */
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -273,14 +266,96 @@
         .bg-red { background: var(--danger); }
         .bg-green { background: var(--secondary); }
 
-        .info-card {
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .toc {
             background: var(--light);
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
+            margin: 20px 0;
             border-left: 4px solid var(--primary);
         }
 
-        /* Contact Modal Styles */
+        .toc h3 {
+            margin-top: 0;
+            border: none;
+            padding-bottom: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 5px 0;
+            padding-left: 20px;
+        }
+
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .toc a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 30px 20px; 
+            color: #94a3b8; 
+            font-size: 0.85rem; 
+            border-top: 1px solid var(--border);
+            background: white;
+            margin-top: 40px;
+            transition: background-color 0.3s ease;
+        }
+
+        html.dark-mode footer {
+            background: #0f172a;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 15px 0;
+        }
+
+        .github-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Modal */
         .modal { 
             display: none; 
             position: fixed; 
@@ -345,52 +420,6 @@
         .close-btn:hover {
             color: #666;
         }
-
-        footer { 
-            text-align: center; 
-            padding: 30px 20px; 
-            color: #94a3b8; 
-            font-size: 0.85rem; 
-            border-top: 1px solid var(--border);
-            background: white;
-            margin-top: 40px;
-            transition: background-color 0.3s ease;
-        }
-
-        html.dark-mode footer {
-            background: #0f172a;
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--dark);
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 15px 0;
-        }
-
-        .github-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .tip-box {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid var(--secondary);
-        }
-
-        html.dark-mode .tip-box {
-            background: rgba(16, 185, 129, 0.1);
-        }
     </style>
 </head>
 <body>
@@ -403,130 +432,247 @@
 
     <div class="container">
         <div class="nav-header">
-            <h1>ESP32 DevKit V1 (30-Pin) Full Guide</h1>
-            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">Developed by: Hein</span>
+            <h1>Raspberry Pi Full Guide</h1>
+            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">By: Hein</span>
         </div>
-
+        
         <div class="intro-card">
-            ESP32 ဆိုတာ low-cost, low-power <strong>"System on a Chip" (SoC)</strong> တစ်ခုဖြစ်ပြီး Wi-Fi နဲ့ Dual-mode Bluetooth ဆက်သွယ်မှုတွေ ပါဝင်တဲ့အတွက် IoT ပရောဂျက်တွေမှာ အသုံးအများဆုံး microcontroller ဖြစ်ပါတယ်။
+            <strong>Raspberry Pi</strong> ဆိုတာ အစ်ခြင်းအရွယ်ရှိတဲ့ <strong>Single Board Computer (SBC)</strong> တစ်ခုဖြစ်ပြီး Linux အခြေခံ Operating System ကို အသုံးပြုတယ်။ GPIO pins များမှတစ်ဆင့် sensors နဲ့ actuators တွေကို ထိန်းချုပ်နိုင်ပြီး Python ဖြင့် programming လုပ်လို့ရတဲ့ အတွက် IoT projects များအတွက် အလွန်နှစ်သက်ဖွယ်ရှိတယ်။
         </div>
 
-        <div class="diagram-container">
-            <h3>ESP32 Pinout Diagram</h3>
-            <img src="esp32.webp" alt="ESP32 Pinout" class="full-diagram">
+        <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">System Overview</a></li>
+                <li><a href="#specs">Technical Specifications</a></li>
+                <li><a href="#gpio">GPIO Pinout</a></li>
+                <li><a href="#setup">Setup & Installation</a></li>
+                <li><a href="#python">Python Programming</a></li>
+                <li><a href="#projects">Project Examples</a></li>
+            </ul>
         </div>
 
-        <h2>၁။ Pin Layout အသေးစိတ်</h2>
+        <h2 id="overview">🖥️ Raspberry Pi System Overview</h2>
         <div class="grid">
-            <div class="info-card">
-                <h3>ပါဝါငုတ်များ (Power Pins)</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0;"><strong>VIN:</strong> 5V External Power ပေးရန်။</li>
-                    <li style="padding: 8px 0;"><strong>3V3:</strong> 3.3V Output (Sensor များအတွက်)။</li>
-                    <li style="padding: 8px 0;"><strong>GND:</strong> Ground (အနှုတ်ငုတ်)။</li>
+            <div class="info-box">
+                <h3>Hardware Components</h3>
+                <ul class="feature-list">
+                    <li>ARM Processor (Quad-core)</li>
+                    <li>RAM (2GB - 8GB)</li>
+                    <li>microSD Card Slot</li>
+                    <li>USB Ports (2-4)</li>
+                    <li>Ethernet Port</li>
+                    <li>WiFi & Bluetooth</li>
                 </ul>
             </div>
-            <div class="info-card">
-                <h3>ဆက်သွယ်ရေး (Communication)</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0;"><strong>I2C:</strong> SDA (GPIO 21), SCL (GPIO 22)</li>
-                    <li style="padding: 8px 0;"><strong>SPI:</strong> MOSI(23), MISO(19), SCK(18), CS(5)</li>
-                    <li style="padding: 8px 0;"><strong>UART:</strong> TX0/RX0 နှင့် TX2/RX2 (GPIO 17/16)</li>
+            <div class="info-box">
+                <h3>Key Features</h3>
+                <ul class="feature-list">
+                    <li>Full Linux Operating System</li>
+                    <li>40 GPIO Pins</li>
+                    <li>I2C, SPI, UART Support</li>
+                    <li>Low Power Consumption</li>
+                    <li>Cost Effective</li>
+                    <li>Large Community Support</li>
                 </ul>
             </div>
         </div>
 
-        <div class="warning-box">
-            ⚠️ သတိပြုရန်: ESP32 GPIO များသည် 3.3V Logic သာဖြစ်ပြီး 5V ပေးမိပါက Chip လောင်သွားနိုင်ပါသည်။
-        </div>
-
-        <h2>၂။ အထူးသတိထားရမည့် Pins များ</h2>
+        <h2 id="specs">📊 Technical Specifications</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Pin Name</th>
-                    <th>Category</th>
-                    <th>အချက်အလက်</th>
+                    <th>Component</th>
+                    <th>Specification</th>
+                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>GPIO 0</td>
-                    <td><span class="badge bg-blue">Boot</span></td>
-                    <td>Ground နှင့်ထိထားလျှင် Programming Mode ထဲရောက်မည်။</td>
+                    <td>Processor</td>
+                    <td><span class="badge bg-blue">ARM Cortex-A72</span></td>
+                    <td>1.5 GHz Quad-core (RPi 4)</td>
                 </tr>
                 <tr>
-                    <td>GPIO 34, 35, 36, 39</td>
-                    <td><span class="badge bg-red">Input Only</span></td>
-                    <td>Output အဖြစ်သုံး၍ မရပါ။</td>
+                    <td>Memory</td>
+                    <td><span class="badge bg-green">RAM</span></td>
+                    <td>2GB, 4GB, or 8GB LPDDR4</td>
                 </tr>
                 <tr>
-                    <td>GPIO 6 to 11</td>
-                    <td><span class="badge bg-red">Flash Memory</span></td>
-                    <td>Internal Flash နှင့် ချိတ်ထားသဖြင့် လုံးဝမသုံးသင့်ပါ။</td>
+                    <td>Storage</td>
+                    <td><span class="badge bg-orange">microSD</span></td>
+                    <td>32GB - 256GB recommended</td>
                 </tr>
                 <tr>
-                    <td>GPIO 1 & 3</td>
-                    <td><span class="badge bg-orange">Serial</span></td>
-                    <td>Hardware Serial အတွက်ဖြစ်၍ I/O အဖြစ်သုံးရန်မသင့်ပါ။</td>
+                    <td>Power</td>
+                    <td><span class="badge bg-red">USB-C</span></td>
+                    <td>5V 3A (15W maximum)</td>
+                </tr>
+                <tr>
+                    <td>GPIO</td>
+                    <td><span class="badge bg-blue">40 Pins</span></td>
+                    <td>3.3V Logic Level</td>
+                </tr>
+                <tr>
+                    <td>Connectivity</td>
+                    <td><span class="badge bg-green">WiFi & BT</span></td>
+                    <td>802.11ac WiFi, Bluetooth 5.0</td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>၃။ လက်တွေ့စမ်းသပ်ရန် Code Example</h2>
-        <p>ပထမဆုံး စမ်းသပ်ရန် <strong>Serial Monitoring</strong> နှင့် <strong>LED Blink</strong> ကုဒ်ဖြစ်ပါသည်။</p>
-        
+        <h2 id="gpio">🔌 GPIO Pinout & Connections</h2>
+        <div class="warning-box">
+            ⚠️ <strong>Important:</strong> Raspberry Pi GPIO pins are 3.3V logic. Connecting 5V devices directly can damage the board. Always use level shifters or voltage dividers.
+        </div>
+
+        <h3>GPIO Pin Categories</h3>
+        <div class="grid">
+            <div>
+                <h4>Power Pins</h4>
+                <ul>
+                    <li><strong>Pin 1, 17:</strong> 3.3V Power</li>
+                    <li><strong>Pin 2, 4:</strong> 5V Power</li>
+                    <li><strong>Pin 6, 9, 14, 20, 25, 30, 34, 39:</strong> Ground (GND)</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Communication Pins</h4>
+                <ul>
+                    <li><strong>I2C:</strong> GPIO 2 (SDA), GPIO 3 (SCL)</li>
+                    <li><strong>SPI:</strong> GPIO 10 (MOSI), GPIO 9 (MISO), GPIO 11 (SCLK)</li>
+                    <li><strong>UART:</strong> GPIO 14 (TX), GPIO 15 (RX)</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 id="setup">⚙️ Setup & Installation</h2>
+        <h3>Step 1: Prepare microSD Card</h3>
+        <ol>
+            <li>Download Raspberry Pi OS from <a href="https://www.raspberrypi.com/software/" target="_blank">official website</a></li>
+            <li>Use Raspberry Pi Imager to write OS to microSD card</li>
+            <li>Enable SSH and WiFi in imager settings</li>
+            <li>Insert microSD card into Raspberry Pi</li>
+        </ol>
+
+        <h3>Step 2: First Boot</h3>
+        <ol>
+            <li>Connect power supply (5V 3A USB-C)</li>
+            <li>Wait for LED indicators to stabilize</li>
+            <li>Connect via SSH: <code>ssh pi@raspberrypi.local</code></li>
+            <li>Default password: <code>raspberry</code></li>
+        </ol>
+
+        <h3>Step 3: Update System</h3>
         <div class="code-header">
-            <span style="color: #cbd5e1; font-size: 0.9rem;">Arduino IDE (.ino)</span>
-            <button class="copy-btn" onclick="copyCode('arduinoCode')">Copy Code</button>
+            <span style="color: #cbd5e1;">Bash</span>
+            <button class="copy-btn" onclick="copyCode('setup-code')">Copy</button>
         </div>
         <div class="code-section">
-            <pre id="arduinoCode">#define LED_PIN 2
-
-void setup() {
-  Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
-}
-
-void loop() {
-  Serial.println("LED is ON");
-  digitalWrite(LED_PIN, HIGH);
-  delay(1000);
-
-  Serial.println("LED is OFF");
-  digitalWrite(LED_PIN, LOW);
-  delay(1000);
-}</pre>
+            <pre id="setup-code">sudo apt update
+sudo apt upgrade -y
+sudo apt install python3-pip -y</pre>
         </div>
 
-        <div class="grid">
-            <div class="tip-box">
-                <strong>💡 Pro Tip:</strong><br>
-                Upload Error တက်လျှင် <strong>BOOT button</strong> ကို ဖိထားပေးပါ။
-            </div>
-            <div class="tip-box">
-                <strong>🔌 Driver:</strong><br>
-                Port မပေါ်ပါက <strong>CP2102 Driver</strong> ကို Install လုပ်ပါ။
-            </div>
+        <h2 id="python">🐍 Python GPIO Programming</h2>
+        <h3>Install Required Libraries</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Bash</span>
+            <button class="copy-btn" onclick="copyCode('install-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="install-code">pip3 install RPi.GPIO
+pip3 install gpiozero</pre>
+        </div>
+
+        <h3>Basic LED Control Example</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Python</span>
+            <button class="copy-btn" onclick="copyCode('led-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="led-code">import RPi.GPIO as GPIO
+import time
+
+# Setup
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+
+try:
+    while True:
+        GPIO.output(17, GPIO.HIGH)
+        print("LED ON")
+        time.sleep(1)
+        
+        GPIO.output(17, GPIO.LOW)
+        print("LED OFF")
+        time.sleep(1)
+        
+except KeyboardInterrupt:
+    print("Exiting...")
+finally:
+    GPIO.cleanup()</pre>
+        </div>
+
+        <h3>Button Input Example</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Python</span>
+            <button class="copy-btn" onclick="copyCode('button-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="button-code">from gpiozero import Button, LED
+from signal import pause
+
+# Setup
+led = LED(17)
+button = Button(27)
+
+# Event handlers
+button.when_pressed = led.on
+button.when_released = led.off
+
+print("Press Ctrl+C to exit")
+pause()</pre>
+        </div>
+
+        <h2 id="projects">🚀 Project Examples</h2>
+        <h3>Project 1: Temperature & Humidity Monitor</h3>
+        <p>Use DHT22 sensor to read temperature and humidity, display on LCD screen or web interface.</p>
+        
+        <h3>Project 2: Home Automation System</h3>
+        <p>Control lights, fans, and appliances using GPIO relays and mobile app interface.</p>
+        
+        <h3>Project 3: Security Camera System</h3>
+        <p>Set up camera module for surveillance with motion detection and cloud storage.</p>
+
+        <div class="info-box">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Always use pull-up/pull-down resistors for GPIO inputs</li>
+                <li>Use relay modules for controlling high-power devices</li>
+                <li>Consider using GPIO expanders for more pins</li>
+                <li>Monitor CPU temperature: <code>vcgencmd measure_temp</code></li>
+            </ul>
         </div>
 
         <footer>
             <div style="text-align: center; margin: 20px 0; padding: 20px 0; border-top: 1px solid var(--border);">
-                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on my GitHub profile</p>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on GitHub</p>
                 <a href="https://github.com/heinzarni04-source" target="_blank" class="github-link">
                     <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
                     Follow on GitHub
                 </a>
             </div>
-            <p>&copy; 2026 IoT Education | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></p>
+            <p>&copy; 2026 IoT Device Knowledge Hub | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></p>
         </footer>
     </div>
 
+    <!-- Contact Modal -->
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <h3 style="color: var(--primary); margin-top: 10px;">Contact Me</h3>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</p>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">Feel free to reach out for IoT projects</p>
             <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
             <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email: heinzarni04@gmail.com</a>
         </div>

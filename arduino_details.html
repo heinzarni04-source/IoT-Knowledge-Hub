@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ESP32 Full Guide - Learn GPIO mapping, WiFi connectivity, Bluetooth communication, and practical programming examples.">
-    <meta name="keywords" content="ESP32, WiFi, Bluetooth, GPIO, Microcontroller, IoT, Tutorial">
+    <meta name="description" content="Arduino Programming Guide - Learn microcontroller programming, sensors, actuators, and build amazing IoT projects.">
+    <meta name="keywords" content="Arduino, Microcontroller, Programming, Sensors, IoT, Tutorial, Projects">
     <meta name="author" content="Hein">
-    <title>ESP32 Full Guide - GPIO Pinout & Programming</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%232563eb'>E</text></svg>">
+    <title>Arduino Programming Guide - Microcontrollers & IoT Projects</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300979D'>A</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --primary: #2563eb;
+            --primary: #00979D;
             --secondary: #10b981;
             --danger: #dc2626;
             --warning: #f59e0b;
@@ -23,7 +23,7 @@
         }
 
         html.dark-mode {
-            --primary: #3b82f6;
+            --primary: #06b6d4;
             --dark: #0f172a;
             --light: #1e293b;
             --text: #e2e8f0;
@@ -135,7 +135,7 @@
         }
 
         .intro-card { 
-            background: rgba(37, 99, 235, 0.1); 
+            background: rgba(0, 151, 157, 0.1); 
             padding: 20px; 
             border-radius: 12px; 
             border-left: 6px solid var(--primary); 
@@ -158,25 +158,19 @@
             color: #fca5a5;
         }
 
-        /* Full Diagram Styling */
-        .diagram-container {
-            width: 100%;
-            text-align: center;
-            margin: 30px 0;
-            background: white;
+        .info-box {
+            background: #eff6ff;
             padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            border-radius: 10px;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            margin: 20px 0;
         }
 
-        html.dark-mode .diagram-container {
-            background: #0f172a;
-        }
-
-        .full-diagram {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        html.dark-mode .info-box {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: rgba(37, 99, 235, 0.5);
+            color: #93c5fd;
         }
 
         .grid { 
@@ -214,7 +208,6 @@
             background: var(--light);
         }
 
-        /* Code Section Styling */
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -273,14 +266,96 @@
         .bg-red { background: var(--danger); }
         .bg-green { background: var(--secondary); }
 
-        .info-card {
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .toc {
             background: var(--light);
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
+            margin: 20px 0;
             border-left: 4px solid var(--primary);
         }
 
-        /* Contact Modal Styles */
+        .toc h3 {
+            margin-top: 0;
+            border: none;
+            padding-bottom: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 5px 0;
+            padding-left: 20px;
+        }
+
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .toc a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 30px 20px; 
+            color: #94a3b8; 
+            font-size: 0.85rem; 
+            border-top: 1px solid var(--border);
+            background: white;
+            margin-top: 40px;
+            transition: background-color 0.3s ease;
+        }
+
+        html.dark-mode footer {
+            background: #0f172a;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 15px 0;
+        }
+
+        .github-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Modal */
         .modal { 
             display: none; 
             position: fixed; 
@@ -345,52 +420,6 @@
         .close-btn:hover {
             color: #666;
         }
-
-        footer { 
-            text-align: center; 
-            padding: 30px 20px; 
-            color: #94a3b8; 
-            font-size: 0.85rem; 
-            border-top: 1px solid var(--border);
-            background: white;
-            margin-top: 40px;
-            transition: background-color 0.3s ease;
-        }
-
-        html.dark-mode footer {
-            background: #0f172a;
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--dark);
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 15px 0;
-        }
-
-        .github-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .tip-box {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid var(--secondary);
-        }
-
-        html.dark-mode .tip-box {
-            background: rgba(16, 185, 129, 0.1);
-        }
     </style>
 </head>
 <body>
@@ -403,130 +432,245 @@
 
     <div class="container">
         <div class="nav-header">
-            <h1>ESP32 DevKit V1 (30-Pin) Full Guide</h1>
-            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">Developed by: Hein</span>
+            <h1>Arduino Programming Guide</h1>
+            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">By: Hein</span>
         </div>
-
+        
         <div class="intro-card">
-            ESP32 ဆိုတာ low-cost, low-power <strong>"System on a Chip" (SoC)</strong> တစ်ခုဖြစ်ပြီး Wi-Fi နဲ့ Dual-mode Bluetooth ဆက်သွယ်မှုတွေ ပါဝင်တဲ့အတွက် IoT ပရောဂျက်တွေမှာ အသုံးအများဆုံး microcontroller ဖြစ်ပါတယ်။
+            <strong>Arduino</strong> ဆိုတာ open-source microcontroller platform တစ်ခုဖြစ်ပြီး အလွယ်တကူ programming လုပ်နိုင်တဲ့ အတွက် beginners နဲ့ professionals နှစ်ခုလုံးအတွက် အသုံးအများဆုံးဖြစ်တယ်။ LEDs, sensors, motors, displays စသည်ဖြင့် interactive projects များ တည်ဆောက်နိုင်တယ်။
         </div>
 
-        <div class="diagram-container">
-            <h3>ESP32 Pinout Diagram</h3>
-            <img src="esp32.webp" alt="ESP32 Pinout" class="full-diagram">
+        <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">Platform Overview</a></li>
+                <li><a href="#boards">Arduino Boards</a></li>
+                <li><a href="#setup">IDE Setup</a></li>
+                <li><a href="#basics">Programming Basics</a></li>
+                <li><a href="#sensors">Working with Sensors</a></li>
+                <li><a href="#projects">Project Examples</a></li>
+            </ul>
         </div>
 
-        <h2>၁။ Pin Layout အသေးစိတ်</h2>
+        <h2 id="overview">🎯 Arduino Platform Overview</h2>
         <div class="grid">
-            <div class="info-card">
-                <h3>ပါဝါငုတ်များ (Power Pins)</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0;"><strong>VIN:</strong> 5V External Power ပေးရန်။</li>
-                    <li style="padding: 8px 0;"><strong>3V3:</strong> 3.3V Output (Sensor များအတွက်)။</li>
-                    <li style="padding: 8px 0;"><strong>GND:</strong> Ground (အနှုတ်ငုတ်)။</li>
+            <div class="info-box">
+                <h3>Why Arduino?</h3>
+                <ul class="feature-list">
+                    <li>Easy to learn and use</li>
+                    <li>Open source hardware & software</li>
+                    <li>Large community support</li>
+                    <li>Affordable and accessible</li>
+                    <li>Cross-platform IDE</li>
+                    <li>Extensive library support</li>
                 </ul>
             </div>
-            <div class="info-card">
-                <h3>ဆက်သွယ်ရေး (Communication)</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0;"><strong>I2C:</strong> SDA (GPIO 21), SCL (GPIO 22)</li>
-                    <li style="padding: 8px 0;"><strong>SPI:</strong> MOSI(23), MISO(19), SCK(18), CS(5)</li>
-                    <li style="padding: 8px 0;"><strong>UART:</strong> TX0/RX0 နှင့် TX2/RX2 (GPIO 17/16)</li>
+            <div class="info-box">
+                <h3>Common Applications</h3>
+                <ul class="feature-list">
+                    <li>Home automation</li>
+                    <li>Robotics projects</li>
+                    <li>Environmental monitoring</li>
+                    <li>Data logging systems</li>
+                    <li>IoT prototyping</li>
+                    <li>Educational projects</li>
                 </ul>
             </div>
         </div>
 
-        <div class="warning-box">
-            ⚠️ သတိပြုရန်: ESP32 GPIO များသည် 3.3V Logic သာဖြစ်ပြီး 5V ပေးမိပါက Chip လောင်သွားနိုင်ပါသည်။
-        </div>
-
-        <h2>၂။ အထူးသတိထားရမည့် Pins များ</h2>
+        <h2 id="boards">📋 Popular Arduino Boards</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Pin Name</th>
-                    <th>Category</th>
-                    <th>အချက်အလက်</th>
+                    <th>Board</th>
+                    <th>Processor</th>
+                    <th>Flash Memory</th>
+                    <th>Best For</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>GPIO 0</td>
-                    <td><span class="badge bg-blue">Boot</span></td>
-                    <td>Ground နှင့်ထိထားလျှင် Programming Mode ထဲရောက်မည်။</td>
+                    <td><span class="badge bg-blue">Arduino Uno</span></td>
+                    <td>ATmega328P</td>
+                    <td>32 KB</td>
+                    <td>Beginners & Basic Projects</td>
                 </tr>
                 <tr>
-                    <td>GPIO 34, 35, 36, 39</td>
-                    <td><span class="badge bg-red">Input Only</span></td>
-                    <td>Output အဖြစ်သုံး၍ မရပါ။</td>
+                    <td><span class="badge bg-green">Arduino Nano</span></td>
+                    <td>ATmega328P</td>
+                    <td>32 KB</td>
+                    <td>Compact Projects</td>
                 </tr>
                 <tr>
-                    <td>GPIO 6 to 11</td>
-                    <td><span class="badge bg-red">Flash Memory</span></td>
-                    <td>Internal Flash နှင့် ချိတ်ထားသဖြင့် လုံးဝမသုံးသင့်ပါ။</td>
+                    <td><span class="badge bg-orange">Arduino Mega</span></td>
+                    <td>ATmega2560</td>
+                    <td>256 KB</td>
+                    <td>Complex Projects</td>
                 </tr>
                 <tr>
-                    <td>GPIO 1 & 3</td>
-                    <td><span class="badge bg-orange">Serial</span></td>
-                    <td>Hardware Serial အတွက်ဖြစ်၍ I/O အဖြစ်သုံးရန်မသင့်ပါ။</td>
+                    <td><span class="badge bg-red">Arduino Leonardo</span></td>
+                    <td>ATmega32U4</td>
+                    <td>32 KB</td>
+                    <td>HID Devices</td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>၃။ လက်တွေ့စမ်းသပ်ရန် Code Example</h2>
-        <p>ပထမဆုံး စမ်းသပ်ရန် <strong>Serial Monitoring</strong> နှင့် <strong>LED Blink</strong> ကုဒ်ဖြစ်ပါသည်။</p>
-        
+        <h2 id="setup">⚙️ Arduino IDE Setup</h2>
+        <h3>Step 1: Download & Install</h3>
+        <ol>
+            <li>Visit <a href="https://www.arduino.cc/en/software" target="_blank">Arduino Official Website</a></li>
+            <li>Download Arduino IDE 2.0 or later</li>
+            <li>Install on your computer (Windows, Mac, or Linux)</li>
+            <li>Launch the IDE</li>
+        </ol>
+
+        <h3>Step 2: Install Board Support</h3>
+        <ol>
+            <li>Go to Tools → Board → Board Manager</li>
+            <li>Search for your board (e.g., "Arduino AVR")</li>
+            <li>Click Install</li>
+            <li>Select your board from Tools → Board</li>
+        </ol>
+
+        <h3>Step 3: Select Port & Upload</h3>
         <div class="code-header">
-            <span style="color: #cbd5e1; font-size: 0.9rem;">Arduino IDE (.ino)</span>
-            <button class="copy-btn" onclick="copyCode('arduinoCode')">Copy Code</button>
+            <span style="color: #cbd5e1;">Steps</span>
+            <button class="copy-btn" onclick="copyCode('setup-code')">Copy</button>
         </div>
         <div class="code-section">
-            <pre id="arduinoCode">#define LED_PIN 2
+            <pre id="setup-code">1. Connect Arduino via USB
+2. Tools → Port → Select COM port
+3. Tools → Board → Select your board
+4. Sketch → Upload (or Ctrl+U)</pre>
+        </div>
+
+        <h2 id="basics">🔧 Arduino Programming Basics</h2>
+        <h3>Basic Structure</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Arduino (C++)</span>
+            <button class="copy-btn" onclick="copyCode('structure-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="structure-code">// This function runs once when powered on
+void setup() {
+  Serial.begin(9600);  // Initialize serial communication
+  pinMode(13, OUTPUT); // Set pin 13 as output
+}
+
+// This function runs repeatedly
+void loop() {
+  digitalWrite(13, HIGH);  // Turn LED on
+  delay(1000);             // Wait 1 second
+  
+  digitalWrite(13, LOW);   // Turn LED off
+  delay(1000);             // Wait 1 second
+}</pre>
+        </div>
+
+        <h3>Digital I/O Example</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Arduino (C++)</span>
+            <button class="copy-btn" onclick="copyCode('digital-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="digital-code">// LED Blink with Button
+const int ledPin = 13;
+const int buttonPin = 2;
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
 }
 
 void loop() {
-  Serial.println("LED is ON");
-  digitalWrite(LED_PIN, HIGH);
-  delay(1000);
+  if (digitalRead(buttonPin) == HIGH) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+}</pre>
+        </div>
 
-  Serial.println("LED is OFF");
-  digitalWrite(LED_PIN, LOW);
+        <h2 id="sensors">📊 Working with Sensors</h2>
+        <h3>Analog Input Example (Temperature Sensor)</h3>
+        <div class="code-header">
+            <span style="color: #cbd5e1;">Arduino (C++)</span>
+            <button class="copy-btn" onclick="copyCode('sensor-code')">Copy</button>
+        </div>
+        <div class="code-section">
+            <pre id="sensor-code">const int sensorPin = A0;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorValue = analogRead(sensorPin);
+  float voltage = sensorValue * (5.0 / 1023.0);
+  float temperature = (voltage - 0.5) * 100;
+  
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" C");
+  
   delay(1000);
 }</pre>
         </div>
 
-        <div class="grid">
-            <div class="tip-box">
-                <strong>💡 Pro Tip:</strong><br>
-                Upload Error တက်လျှင် <strong>BOOT button</strong> ကို ဖိထားပေးပါ။
-            </div>
-            <div class="tip-box">
-                <strong>🔌 Driver:</strong><br>
-                Port မပေါ်ပါက <strong>CP2102 Driver</strong> ကို Install လုပ်ပါ။
-            </div>
+        <h2 id="projects">🚀 Arduino Project Ideas</h2>
+        <h3>Project 1: Smart Traffic Light System</h3>
+        <p>Create a traffic light with automatic timing using LEDs and delay functions.</p>
+        
+        <h3>Project 2: Temperature & Humidity Logger</h3>
+        <p>Use DHT22 sensor to log environmental data to SD card or cloud.</p>
+        
+        <h3>Project 3: Ultrasonic Distance Sensor</h3>
+        <p>Build a distance measurement system using HC-SR04 ultrasonic sensor.</p>
+
+        <h3>Project 4: Servo Motor Control</h3>
+        <p>Control servo motors for robotics applications using PWM signals.</p>
+
+        <div class="info-box">
+            <strong>💡 Best Practices:</strong>
+            <ul>
+                <li>Always use appropriate resistors and capacitors</li>
+                <li>Test code in simulation before uploading</li>
+                <li>Use meaningful variable names</li>
+                <li>Add comments to explain code logic</li>
+                <li>Check voltage levels before connecting components</li>
+                <li>Use Serial Monitor for debugging</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            ⚠️ <strong>Safety Tips:</strong>
+            <ul>
+                <li>Never connect 5V directly to analog inputs (max 5V)</li>
+                <li>Use current-limiting resistors with LEDs</li>
+                <li>Disconnect power before making circuit changes</li>
+                <li>Use USB power for safe operation</li>
+            </ul>
         </div>
 
         <footer>
             <div style="text-align: center; margin: 20px 0; padding: 20px 0; border-top: 1px solid var(--border);">
-                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on my GitHub profile</p>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on GitHub</p>
                 <a href="https://github.com/heinzarni04-source" target="_blank" class="github-link">
                     <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
                     Follow on GitHub
                 </a>
             </div>
-            <p>&copy; 2026 IoT Education | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></p>
+            <p>&copy; 2026 IoT Device Knowledge Hub | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></p>
         </footer>
     </div>
 
+    <!-- Contact Modal -->
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <h3 style="color: var(--primary); margin-top: 10px;">Contact Me</h3>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</p>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">Feel free to reach out for IoT projects</p>
             <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
             <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email: heinzarni04@gmail.com</a>
         </div>
