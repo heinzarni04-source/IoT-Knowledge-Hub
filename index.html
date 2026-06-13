@@ -85,8 +85,9 @@
 
         .nav-controls {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .search-box {
@@ -131,6 +132,43 @@
         }
 
         .theme-toggle:hover {
+            background: var(--border);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .lang-btn {
+            padding: 8px 13px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lang-btn:not(.active):hover {
+            background: var(--border);
+        }
+
+        .lang-divider {
+            width: 1px;
+            height: 20px;
             background: var(--border);
         }
 
@@ -458,6 +496,11 @@
             .search-box input { width: 100px; }
             .header-content { padding: 12px 15px; }
         }
+
+        /* Language transition */
+        [data-en], [data-my] {
+            transition: opacity 0.2s ease;
+        }
     </style>
 </head>
 <body>
@@ -470,14 +513,26 @@
                     <input type="text" id="searchInput" placeholder="Search devices...">
                     <div class="search-results" id="searchResults"></div>
                 </div>
+                <!-- Language Switcher -->
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+                    <div class="lang-divider"></div>
+                    <button class="lang-btn" id="btnMY" onclick="setLang('my')">မြန်မာ</button>
+                </div>
                 <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
             </div>
         </div>
     </header>
 
     <main>
-        <h1>IoT Device Knowledge Hub</h1>
-        <p class="subtitle">Learn the fundamentals of IoT microcontrollers with comprehensive guides and tutorials</p>
+        <h1>
+            <span data-en>IoT Device Knowledge Hub</span>
+            <span data-my style="display:none">IoT ကိရိယာ သင်ခန်းစာ Hub</span>
+        </h1>
+        <p class="subtitle">
+            <span data-en>Learn the fundamentals of IoT microcontrollers with comprehensive guides and tutorials</span>
+            <span data-my style="display:none">IoT microcontroller များကို လေ့လာနိုင်သော ပြည့်စုံသော လမ်းညွှန်များနှင့် သင်ခန်းစာများ</span>
+        </p>
         
         <div class="container">
             <!-- ESP32 Card -->
@@ -485,11 +540,23 @@
                 <img src="esp32.webp" alt="ESP32 Microcontroller" class="device-photo">
                 <div class="content">
                     <span class="tag">ESP32 • WiFi & Bluetooth</span>
-                    <h3>ESP32 Development & Pinout Guide</h3>
-                    <p class="details">Learn the fundamentals of the ESP32 SoC, including GPIO mapping, WiFi connectivity, Bluetooth communication, and practical programming examples.</p>
+                    <h3>
+                        <span data-en>ESP32 Development & Pinout Guide</span>
+                        <span data-my style="display:none">ESP32 Development & Pinout လမ်းညွှန်</span>
+                    </h3>
+                    <p class="details">
+                        <span data-en>Learn the fundamentals of the ESP32 SoC, including GPIO mapping, WiFi connectivity, Bluetooth communication, and practical programming examples.</span>
+                        <span data-my style="display:none">ESP32 SoC ၏ အခြေခံများကို လေ့လာပါ။ GPIO mapping၊ WiFi ချိတ်ဆက်မှု၊ Bluetooth ဆက်သွယ်ရေးနှင့် လက်တွေ့ programming နမူနာများ ပါဝင်သည်။</span>
+                    </p>
                     <div class="btn-group">
-                        <a href="https://app.cirkitdesigner.com/project" class="btn btn-primary" target="_blank">Create Project</a>
-                        <a href="esp32_details.html" class="btn btn-dark">Full Guide</a>
+                        <a href="https://app.cirkitdesigner.com/project" class="btn btn-primary" target="_blank">
+                            <span data-en>Create Project</span>
+                            <span data-my style="display:none">Project ဖန်တီးရန်</span>
+                        </a>
+                        <a href="esp32_details.html" class="btn btn-dark">
+                            <span data-en>Full Guide</span>
+                            <span data-my style="display:none">အပြည့်အစုံ လမ်းညွှန်</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -499,11 +566,23 @@
                 <img src="raspberry.webp" alt="Raspberry Pi Single Board Computer" class="device-photo">
                 <div class="content">
                     <span class="tag">Raspberry Pi • Linux IoT</span>
-                    <h3>Raspberry Pi System Architecture</h3>
-                    <p class="details">Explore Linux-based single-board computing, GPIO control, Python automation, and build advanced IoT applications with Raspberry Pi.</p>
+                    <h3>
+                        <span data-en>Raspberry Pi System Architecture</span>
+                        <span data-my style="display:none">Raspberry Pi စနစ် ဗိသုကာ</span>
+                    </h3>
+                    <p class="details">
+                        <span data-en>Explore Linux-based single-board computing, GPIO control, Python automation, and build advanced IoT applications with Raspberry Pi.</span>
+                        <span data-my style="display:none">Linux အခြေခံ single-board computing၊ GPIO ထိန်းချုပ်မှု၊ Python automation နှင့် Raspberry Pi ဖြင့် အဆင့်မြင့် IoT applications တည်ဆောက်ပါ။</span>
+                    </p>
                     <div class="btn-group">
-                        <a href="raspberry_details.html" class="btn btn-primary">Full Guide</a>
-                        <a href="raspberry_details.html" class="btn btn-dark">Learn More</a>
+                        <a href="raspberry_details.html" class="btn btn-primary">
+                            <span data-en>Full Guide</span>
+                            <span data-my style="display:none">အပြည့်အစုံ လမ်းညွှန်</span>
+                        </a>
+                        <a href="raspberry_details.html" class="btn btn-dark">
+                            <span data-en>Learn More</span>
+                            <span data-my style="display:none">ပိုမိုလေ့လာရန်</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -513,11 +592,23 @@
                 <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%2300979D' width='200' height='200'/><text x='100' y='120' font-size='80' fill='white' text-anchor='middle' font-weight='bold'>A</text></svg>" alt="Arduino Microcontroller" class="device-photo">
                 <div class="content">
                     <span class="tag">Arduino • Open Source</span>
-                    <h3>Arduino Programming & Projects</h3>
-                    <p class="details">Master Arduino development with comprehensive guides on microcontrollers, sensors, actuators, and create amazing IoT projects.</p>
+                    <h3>
+                        <span data-en>Arduino Programming & Projects</span>
+                        <span data-my style="display:none">Arduino Programming & Projects</span>
+                    </h3>
+                    <p class="details">
+                        <span data-en>Master Arduino development with comprehensive guides on microcontrollers, sensors, actuators, and create amazing IoT projects.</span>
+                        <span data-my style="display:none">Arduino development ကို ကျွမ်းကျင်အောင် လေ့လာပါ။ microcontrollers၊ sensors၊ actuators များနှင့် အံ့ဖွယ် IoT projects များ ဖန်တီးနိုင်သည်။</span>
+                    </p>
                     <div class="btn-group">
-                        <a href="arduino_details.html" class="btn btn-primary">Full Guide</a>
-                        <a href="arduino_details.html" class="btn btn-dark">Learn More</a>
+                        <a href="arduino_details.html" class="btn btn-primary">
+                            <span data-en>Full Guide</span>
+                            <span data-my style="display:none">အပြည့်အစုံ လမ်းညွှန်</span>
+                        </a>
+                        <a href="arduino_details.html" class="btn btn-dark">
+                            <span data-en>Learn More</span>
+                            <span data-my style="display:none">ပိုမိုလေ့လာရန်</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -527,10 +618,14 @@
     <footer>
         <div class="footer-content">
             <div style="text-align: center; margin: 20px 0; padding: 20px 0; border-top: 1px solid var(--border);">
-                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on my GitHub profile</p>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">
+                    <span data-en>Explore more IoT projects on my GitHub profile</span>
+                    <span data-my style="display:none">GitHub profile တွင် IoT projects များကို ကြည့်ရှုပါ</span>
+                </p>
                 <a href="https://github.com/heinzarni04-source" target="_blank" class="github-link">
                     <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-                    Follow on GitHub
+                    <span data-en>Follow on GitHub</span>
+                    <span data-my style="display:none">GitHub တွင် Follow လုပ်ပါ</span>
                 </a>
             </div>
             <p>&copy; 2026 IoT Device Knowledge Hub | Created by <strong class="dev-link" onclick="openModal()">Hein</strong></p>
@@ -541,19 +636,40 @@
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h3 style="color: var(--primary); margin-top: 10px;">Contact Me</h3>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">Feel free to reach out for IoT projects and collaborations</p>
+            <h3 style="color: var(--primary); margin-top: 10px;">
+                <span data-en>Contact Me</span>
+                <span data-my style="display:none">ဆက်သွယ်ရန်</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">
+                <span data-en>Feel free to reach out for IoT projects and collaborations</span>
+                <span data-my style="display:none">IoT projects နှင့် ပူးပေါင်းဆောင်ရွက်မှုများအတွက် ဆက်သွယ်နိုင်ပါသည်</span>
+            </p>
             <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
             <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email: heinzarni04@gmail.com</a>
         </div>
     </div>
 
     <script>
-        // Dark Mode Toggle
+        // ─── Language Switcher ───────────────────────────────────────────────
+        const savedLang = localStorage.getItem('lang') || 'en';
+        setLang(savedLang, false);
+
+        function setLang(lang, save = true) {
+            const isEN = lang === 'en';
+            document.querySelectorAll('[data-en]').forEach(el => el.style.display = isEN ? '' : 'none');
+            document.querySelectorAll('[data-my]').forEach(el => el.style.display = isEN ? 'none' : '');
+            document.getElementById('btnEN').classList.toggle('active', isEN);
+            document.getElementById('btnMY').classList.toggle('active', !isEN);
+            document.documentElement.lang = lang;
+            // Update search placeholder
+            document.getElementById('searchInput').placeholder = isEN ? 'Search devices...' : 'ကိရိယာ ရှာဖွေရန်...';
+            if (save) localStorage.setItem('lang', lang);
+        }
+
+        // ─── Dark Mode Toggle ────────────────────────────────────────────────
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
-        // Check for saved theme preference or default to light mode
         const savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
             html.classList.add('dark-mode');
@@ -567,7 +683,7 @@
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         });
 
-        // Search Functionality
+        // ─── Search Functionality ────────────────────────────────────────────
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         const devices = [
@@ -589,25 +705,27 @@
                 device.keyword.includes(query)
             );
 
+            const lang = localStorage.getItem('lang') || 'en';
+            const noResult = lang === 'my' ? 'ကိရိယာ မတွေ့ပါ' : 'No devices found';
+
             if (results.length > 0) {
                 searchResults.innerHTML = results.map(result => 
                     `<div class="search-result-item" onclick="window.location.href='${result.link}'">${result.name}</div>`
                 ).join('');
                 searchResults.classList.add('active');
             } else {
-                searchResults.innerHTML = '<div class="search-result-item">No devices found</div>';
+                searchResults.innerHTML = `<div class="search-result-item">${noResult}</div>`;
                 searchResults.classList.add('active');
             }
         });
 
-        // Close search results when clicking outside
         document.addEventListener('click', (e) => {
             if (e.target !== searchInput && e.target !== searchResults) {
                 searchResults.classList.remove('active');
             }
         });
 
-        // Modal Functions
+        // ─── Modal Functions ─────────────────────────────────────────────────
         function openModal() {
             document.getElementById("contactModal").style.display = "block";
         }

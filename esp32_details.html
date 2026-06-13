@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,6 +60,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .back-btn { 
@@ -68,10 +70,18 @@
             font-weight: bold; 
             font-size: 1rem;
             transition: opacity 0.3s ease;
+            white-space: nowrap;
         }
 
         .back-btn:hover {
             opacity: 0.8;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .theme-toggle {
@@ -85,6 +95,43 @@
         }
 
         .theme-toggle:hover {
+            background: var(--border);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .lang-btn {
+            padding: 8px 13px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lang-btn:not(.active):hover {
+            background: var(--border);
+        }
+
+        .lang-divider {
+            width: 1px;
+            height: 20px;
             background: var(--border);
         }
 
@@ -158,7 +205,6 @@
             color: #fca5a5;
         }
 
-        /* Full Diagram Styling */
         .diagram-container {
             width: 100%;
             text-align: center;
@@ -214,7 +260,6 @@
             background: var(--light);
         }
 
-        /* Code Section Styling */
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -280,7 +325,6 @@
             border-left: 4px solid var(--primary);
         }
 
-        /* Contact Modal Styles */
         .modal { 
             display: none; 
             position: fixed; 
@@ -396,19 +440,33 @@
 <body>
     <header>
         <div class="header-content">
-            <a href="index.html" class="back-btn">← Back to Device Hub</a>
-            <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+            <a href="index.html" class="back-btn">
+                <span data-en>← Back to Device Hub</span>
+                <span data-my style="display:none">← Device Hub သို့ ပြန်သွားရန်</span>
+            </a>
+            <div class="header-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+                    <div class="lang-divider"></div>
+                    <button class="lang-btn" id="btnMY" onclick="setLang('my')">မြန်မာ</button>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+            </div>
         </div>
     </header>
 
     <div class="container">
         <div class="nav-header">
             <h1>ESP32 DevKit V1 (30-Pin) Full Guide</h1>
-            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">Developed by: Hein</span>
+            <span onclick="openModal()" style="color: var(--primary); font-weight: bold; cursor: pointer; border-bottom: 1px dashed var(--primary);">
+                <span data-en>Developed by: Hein</span>
+                <span data-my style="display:none">ရေးသားသူ: Hein</span>
+            </span>
         </div>
 
         <div class="intro-card">
-            ESP32 ဆိုတာ low-cost, low-power <strong>"System on a Chip" (SoC)</strong> တစ်ခုဖြစ်ပြီး Wi-Fi နဲ့ Dual-mode Bluetooth ဆက်သွယ်မှုတွေ ပါဝင်တဲ့အတွက် IoT ပရောဂျက်တွေမှာ အသုံးအများဆုံး microcontroller ဖြစ်ပါတယ်။
+            <span data-en>ESP32 is a low-cost, low-power <strong>"System on a Chip" (SoC)</strong> that includes Wi-Fi and Dual-mode Bluetooth connectivity, making it the most widely used microcontroller for IoT projects.</span>
+            <span data-my style="display:none">ESP32 ဆိုတာ low-cost, low-power <strong>"System on a Chip" (SoC)</strong> တစ်ခုဖြစ်ပြီး Wi-Fi နဲ့ Dual-mode Bluetooth ဆက်သွယ်မှုတွေ ပါဝင်တဲ့အတွက် IoT ပရောဂျက်တွေမှာ အသုံးအများဆုံး microcontroller ဖြစ်ပါတယ်။</span>
         </div>
 
         <div class="diagram-container">
@@ -416,69 +474,118 @@
             <img src="esp32.webp" alt="ESP32 Pinout" class="full-diagram">
         </div>
 
-        <h2>၁။ Pin Layout အသေးစိတ်</h2>
+        <h2>
+            <span data-en>1. Pin Layout Details</span>
+            <span data-my style="display:none">၁။ Pin Layout အသေးစိတ်</span>
+        </h2>
         <div class="grid">
             <div class="info-card">
-                <h3>ပါဝါငုတ်များ (Power Pins)</h3>
+                <h3>
+                    <span data-en>Power Pins</span>
+                    <span data-my style="display:none">ပါဝါငုတ်များ (Power Pins)</span>
+                </h3>
                 <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0;"><strong>VIN:</strong> 5V External Power ပေးရန်။</li>
-                    <li style="padding: 8px 0;"><strong>3V3:</strong> 3.3V Output (Sensor များအတွက်)။</li>
-                    <li style="padding: 8px 0;"><strong>GND:</strong> Ground (အနှုတ်ငုတ်)။</li>
+                    <li style="padding: 8px 0;">
+                        <strong>VIN:</strong>
+                        <span data-en> 5V External Power supply.</span>
+                        <span data-my style="display:none"> 5V External Power ပေးရန်။</span>
+                    </li>
+                    <li style="padding: 8px 0;">
+                        <strong>3V3:</strong>
+                        <span data-en> 3.3V Output (for Sensors).</span>
+                        <span data-my style="display:none"> 3.3V Output (Sensor များအတွက်)။</span>
+                    </li>
+                    <li style="padding: 8px 0;">
+                        <strong>GND:</strong>
+                        <span data-en> Ground (negative terminal).</span>
+                        <span data-my style="display:none"> Ground (အနှုတ်ငုတ်)။</span>
+                    </li>
                 </ul>
             </div>
             <div class="info-card">
-                <h3>ဆက်သွယ်ရေး (Communication)</h3>
+                <h3>
+                    <span data-en>Communication Pins</span>
+                    <span data-my style="display:none">ဆက်သွယ်ရေး (Communication)</span>
+                </h3>
                 <ul style="list-style: none; padding: 0;">
                     <li style="padding: 8px 0;"><strong>I2C:</strong> SDA (GPIO 21), SCL (GPIO 22)</li>
                     <li style="padding: 8px 0;"><strong>SPI:</strong> MOSI(23), MISO(19), SCK(18), CS(5)</li>
-                    <li style="padding: 8px 0;"><strong>UART:</strong> TX0/RX0 နှင့် TX2/RX2 (GPIO 17/16)</li>
+                    <li style="padding: 8px 0;"><strong>UART:</strong> TX0/RX0 &amp; TX2/RX2 (GPIO 17/16)</li>
                 </ul>
             </div>
         </div>
 
         <div class="warning-box">
-            ⚠️ သတိပြုရန်: ESP32 GPIO များသည် 3.3V Logic သာဖြစ်ပြီး 5V ပေးမိပါက Chip လောင်သွားနိုင်ပါသည်။
+            <span data-en>⚠️ Warning: ESP32 GPIO pins are 3.3V Logic only. Applying 5V may burn the chip.</span>
+            <span data-my style="display:none">⚠️ သတိပြုရန်: ESP32 GPIO များသည် 3.3V Logic သာဖြစ်ပြီး 5V ပေးမိပါက Chip လောင်သွားနိုင်ပါသည်။</span>
         </div>
 
-        <h2>၂။ အထူးသတိထားရမည့် Pins များ</h2>
+        <h2>
+            <span data-en>2. Special Attention Pins</span>
+            <span data-my style="display:none">၂။ အထူးသတိထားရမည့် Pins များ</span>
+        </h2>
         <table>
             <thead>
                 <tr>
                     <th>Pin Name</th>
                     <th>Category</th>
-                    <th>အချက်အလက်</th>
+                    <th>
+                        <span data-en>Details</span>
+                        <span data-my style="display:none">အချက်အလက်</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>GPIO 0</td>
                     <td><span class="badge bg-blue">Boot</span></td>
-                    <td>Ground နှင့်ထိထားလျှင် Programming Mode ထဲရောက်မည်။</td>
+                    <td>
+                        <span data-en>Connects to Ground → enters Programming Mode.</span>
+                        <span data-my style="display:none">Ground နှင့်ထိထားလျှင် Programming Mode ထဲရောက်မည်။</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>GPIO 34, 35, 36, 39</td>
                     <td><span class="badge bg-red">Input Only</span></td>
-                    <td>Output အဖြစ်သုံး၍ မရပါ။</td>
+                    <td>
+                        <span data-en>Cannot be used as Output.</span>
+                        <span data-my style="display:none">Output အဖြစ်သုံး၍ မရပါ။</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>GPIO 6 to 11</td>
                     <td><span class="badge bg-red">Flash Memory</span></td>
-                    <td>Internal Flash နှင့် ချိတ်ထားသဖြင့် လုံးဝမသုံးသင့်ပါ။</td>
+                    <td>
+                        <span data-en>Connected to Internal Flash — do not use.</span>
+                        <span data-my style="display:none">Internal Flash နှင့် ချိတ်ထားသဖြင့် လုံးဝမသုံးသင့်ပါ။</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>GPIO 1 & 3</td>
+                    <td>GPIO 1 &amp; 3</td>
                     <td><span class="badge bg-orange">Serial</span></td>
-                    <td>Hardware Serial အတွက်ဖြစ်၍ I/O အဖြစ်သုံးရန်မသင့်ပါ။</td>
+                    <td>
+                        <span data-en>Used for Hardware Serial — not suitable for I/O.</span>
+                        <span data-my style="display:none">Hardware Serial အတွက်ဖြစ်၍ I/O အဖြစ်သုံးရန်မသင့်ပါ။</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>၃။ လက်တွေ့စမ်းသပ်ရန် Code Example</h2>
-        <p>ပထမဆုံး စမ်းသပ်ရန် <strong>Serial Monitoring</strong> နှင့် <strong>LED Blink</strong> ကုဒ်ဖြစ်ပါသည်။</p>
+        <h2>
+            <span data-en>3. Practical Code Example</span>
+            <span data-my style="display:none">၃။ လက်တွေ့စမ်းသပ်ရန် Code Example</span>
+        </h2>
+        <p>
+            <span data-en>First test: <strong>Serial Monitoring</strong> and <strong>LED Blink</strong> code.</span>
+            <span data-my style="display:none">ပထမဆုံး စမ်းသပ်ရန် <strong>Serial Monitoring</strong> နှင့် <strong>LED Blink</strong> ကုဒ်ဖြစ်ပါသည်။</span>
+        </p>
         
         <div class="code-header">
             <span style="color: #cbd5e1; font-size: 0.9rem;">Arduino IDE (.ino)</span>
-            <button class="copy-btn" onclick="copyCode('arduinoCode')">Copy Code</button>
+            <button class="copy-btn" onclick="copyCode('arduinoCode')">
+                <span data-en>Copy Code</span>
+                <span data-my style="display:none">ကုဒ် ကူးယူရန်</span>
+            </button>
         </div>
         <div class="code-section">
             <pre id="arduinoCode">#define LED_PIN 2
@@ -502,20 +609,26 @@ void loop() {
         <div class="grid">
             <div class="tip-box">
                 <strong>💡 Pro Tip:</strong><br>
-                Upload Error တက်လျှင် <strong>BOOT button</strong> ကို ဖိထားပေးပါ။
+                <span data-en>If Upload Error occurs, hold the <strong>BOOT button</strong>.</span>
+                <span data-my style="display:none">Upload Error တက်လျှင် <strong>BOOT button</strong> ကို ဖိထားပေးပါ။</span>
             </div>
             <div class="tip-box">
                 <strong>🔌 Driver:</strong><br>
-                Port မပေါ်ပါက <strong>CP2102 Driver</strong> ကို Install လုပ်ပါ။
+                <span data-en>If port not found, install <strong>CP2102 Driver</strong>.</span>
+                <span data-my style="display:none">Port မပေါ်ပါက <strong>CP2102 Driver</strong> ကို Install လုပ်ပါ။</span>
             </div>
         </div>
 
         <footer>
             <div style="text-align: center; margin: 20px 0; padding: 20px 0; border-top: 1px solid var(--border);">
-                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Explore more IoT projects on my GitHub profile</p>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">
+                    <span data-en>Explore more IoT projects on my GitHub profile</span>
+                    <span data-my style="display:none">GitHub profile တွင် IoT projects များကို ကြည့်ရှုပါ</span>
+                </p>
                 <a href="https://github.com/heinzarni04-source" target="_blank" class="github-link">
                     <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-                    Follow on GitHub
+                    <span data-en>Follow on GitHub</span>
+                    <span data-my style="display:none">GitHub တွင် Follow လုပ်ပါ</span>
                 </a>
             </div>
             <p>&copy; 2026 IoT Education | Created by <strong onclick="openModal()" style="color: var(--primary); cursor: pointer;">Hein</strong></p>
@@ -525,15 +638,35 @@ void loop() {
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h3 style="color: var(--primary); margin-top: 10px;">Contact Me</h3>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</p>
+            <h3 style="color: var(--primary); margin-top: 10px;">
+                <span data-en>Contact Me</span>
+                <span data-my style="display:none">ဆက်သွယ်ရန်</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">
+                <span data-en>Feel free to reach out for IoT projects and collaborations</span>
+                <span data-my style="display:none">IoT ပရောဂျက်များအတွက် ဆက်သွယ်နိုင်ပါသည်။</span>
+            </p>
             <a href="tel:+959264937374" class="contact-link">📞 Call: +959264937374</a>
             <a href="mailto:heinzarni04@gmail.com" class="contact-link">📧 Email: heinzarni04@gmail.com</a>
         </div>
     </div>
 
     <script>
-        // Dark Mode Toggle
+        // ─── Language Switcher ───────────────────────────────────────────────
+        const savedLang = localStorage.getItem('lang') || 'en';
+        setLang(savedLang, false);
+
+        function setLang(lang, save = true) {
+            const isEN = lang === 'en';
+            document.querySelectorAll('[data-en]').forEach(el => el.style.display = isEN ? '' : 'none');
+            document.querySelectorAll('[data-my]').forEach(el => el.style.display = isEN ? 'none' : '');
+            document.getElementById('btnEN').classList.toggle('active', isEN);
+            document.getElementById('btnMY').classList.toggle('active', !isEN);
+            document.documentElement.lang = lang;
+            if (save) localStorage.setItem('lang', lang);
+        }
+
+        // ─── Dark Mode Toggle ────────────────────────────────────────────────
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
@@ -550,23 +683,23 @@ void loop() {
             themeToggle.textContent = isDark ? '☀️' : '🌙';
         });
 
-        // Copy Code Function
+        // ─── Copy Code ───────────────────────────────────────────────────────
         function copyCode(elementId) {
             const code = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(code).then(() => {
-                const btn = event.target;
-                const originalText = btn.innerText;
-                btn.innerText = "Copied!";
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                const lang = localStorage.getItem('lang') || 'en';
+                btn.innerHTML = lang === 'my' ? 'ကူးယူပြီး!' : 'Copied!';
                 btn.style.background = "#2563eb";
-                
                 setTimeout(() => {
-                    btn.innerText = originalText;
+                    btn.innerHTML = originalHTML;
                     btn.style.background = "#10b981";
                 }, 2000);
             });
         }
 
-        // Modal Functions
+        // ─── Modal Functions ─────────────────────────────────────────────────
         function openModal() {
             document.getElementById("contactModal").style.display = "block";
         }
